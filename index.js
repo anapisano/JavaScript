@@ -67,78 +67,133 @@ if (lista == "si"){
  */
 
 
+///*PRE-ENTREGA 1*///
 
 
+class Productos {
+    constructor(nombre, precio, tipo, stock) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.stock = stock;
+    }
+}
 
-const listaProductos = [
-    {
-        id: 1 , 
-        nombre: `Piedras de equilibrio` ,
-        categoria: `Madera`,
-        precio: 800,
-        stock: 4,
-    },
-    {
-        id: 2 , 
-        nombre: `Casita de tela` ,
-        categoria: `Tela`,
-        precio: 2600,
-        stock: 5,
-    },
-    {
-        id: 3 , 
-        nombre: `Animales Puna` ,
-        categoria: `Madera`,
-        precio: 1700,
-        stock: 8,
-    },
-    {
-        id: 4 , 
-        nombre: `Corona` ,
-        categoria: `Tela`,
-        precio: 650,
-        stock: 7,
-    },
-]
+listaProducto =[]
 
+const restar = (a, b) => a - b;
+const div = (a, b) => a / b;
+const sumar = (a, b) => a + b;
+const multi = (a, b) => a * b;
 
-const listasNombres = listaProductos.map ((producto) => producto.nombre)
-const listaPrecios = listaProductos.map ((producto) => producto.precio)
+listaProducto.push(new Productos(`Piedras de equilibrio`, 800, `madera`, 4));
+listaProducto.push(new Productos(`Casita de tela`, 2500, `Tela`, 5));
+listaProducto.push(new Productos(`Animales Puna`, 1700, `madera`, 8));
+listaProducto.push(new Productos(`Corona`, 650 ,`Tela`,  7));
+
+const listaNombres = listaProducto.map ((producto) => producto.nombre)
+const listaPrecios = listaProducto.map ((producto) => producto.precio)
+const listaStock = listaProducto.map ((producto) => producto.stock)
+
+let total = 0;
+let cantidadProductos = 0;
+let carrito = 0;
+
 
 alert("¡BIENVENIDXS A A TIENDA VIRTUAL DE CRÍA SUELTA!")
 
-let siNo = prompt ("A continuacion le detallamos nuestra lista de productos: \n\n"+ listasNombres + "\n\n¿desea conocer el precio de alguno de nuestros productos?\n\n1.Si\n2.No, gracias" )
+function menu(){
+    let siNo = prompt ("A continuacion le detallamos nuestra lista de productos: \n\n"+ listaNombres + "\n\n¿desea conocer los precios nuestros productos?\n\n1. Si\n2. No, gracias" )
 
-if (siNo == 1){
-    let eleccion = prompt (`¿De cuál?\n\n1. ` + listasNombres[0] + `\n2. ` + listasNombres[1] + `\n3. ` + listasNombres[2] + `\n4. `+ listasNombres[3] + `\n5. De todos los productos`)
-
-        if (eleccion == 1){
-            let carrito = prompt (`$` + listaPrecios[0] + `\n¿Agregar al carrito?\n\n1.Si\n2.No`)
-
-            if (carrito == 1 ){  
-                alert (listasNombres[0] + ` agregado correctamente`)
-            }else{
-                alert ("Gracias por visitarnos =)")
-            }
-        }else if (eleccion == 2){
-            prompt (`$` + listaPrecios[1] + `\n¿Agregar al carrito?`)
-        }else if (eleccion == 3){
-            prompt (`$` + listaPrecios[2] + `\n¿Agregar al carrito?`)
-        }else if (eleccion == 4){
-            prompt (`$` + listaPrecios[3] + `\n¿Agregar al carrito?`)
-        }else if (eleccion == 5){
-            prompt (listasNombres[0] + ` $` + listaPrecios[0] + `\n`+ listasNombres[1] + ` $` + listaPrecios[1] + `\n` + listasNombres[2] + ` $` + listaPrecios[2] + `\n` + listasNombres[3] + ` $` + listaPrecios[3])
+    if (siNo == 1){
+        siNo = prompt (listaNombres[0] + ` $` + listaPrecios[0] + `\n`+ listaNombres[1] + ` $` + listaPrecios[1] + `\n` + listaNombres[2] + ` $` + listaPrecios[2] + `\n` + listaNombres[3] + ` $` + listaPrecios[3] + `\n\n¿Desea agregar algún producto al carrito?\n\n1. Si\n2. No`)
+        if (siNo == 1){
+            compra()
+        }else if (siNo == 2){
+            alert ("Gracias por visitarnos =)")
+    
         }else{
             alert ("Opción inválida")
         }
 
-}else if (siNo == 2){
-    alert ("Gracias por visitarnos =)")
+    }else if (siNo == 2){
+        alert ("Gracias por visitarnos =)")
 
-}else{
-    alert ("Opción inválida")
+    }else{
+        alert ("Opción inválida")
+    }
 }
 
-prompt ("¿Desea realizar alguna compra?")
+function pago(){
+    let pago = parseInt(prompt(`Elija una opcion: \n1. Seguir Comprando\n2. Finalizar compra\n3. Salir`));
+    
+    if (pago == 1) {
+            compra();
+    } else if (pago == 2) {
+            alert(`su compra es de un total de $${carrito}`);
+            let pago = prompt(" ¿Que tipo de pago desea usar? \n1: Efectivo \n2: 3 cuotas sin interes \n3: 6 cuotas con recargo del 10% \n4: 12 cuotas con 20% interes");
+        if (pago == 1) {
+                alert(`Su total es de $${carrito} \n Te enviaremos al menu principal \n¡Gracias por confiar en Cría Suelta!`)
+                menu();
+                
+        } else if (pago == 2) {
+                alert(`Usted opto por 3 cuotas de: \n $${div(carrito, 3)} cada una\n Te enviaremos al menu principal \n¡Gracias por confiar en Cría Suelta!`);
+                menu();
+                
+        } else if (pago == 3) {
+                alert(`Usted opto por 6 cuotas de: $${div(sumar(carrito,(multi(carrito, 0.1))), 6)} cada una\n Te enviaremos al menu principal \n¡Gracias por confiar en Cría Suelta!`);
+                menu();
+                
+        } else if (pago == 4) {
+                alert(`Usted opto por 12 cuotas de: $${div(sumar(carrito,(multi(carrito, 0.2))), 12)} cada una\n Te enviaremos al menu principal \n¡Gracias por confiar en Cría Suelta!`);
+                menu();
+                
+            }
+        }
+    
+}
 
+function compra(){
+    ingreso = prompt (`¿Cuál producto desea agregar?\n1. Piedras de equilibrio \n2. Casita de tela \n3. Animales Puna \n4. Corona \n5: Salir`)
+    if (ingreso == 1) {
+        unidades = parseInt(prompt(`¿Cuantas unidades de ${listaProducto[0].nombre} deseas?`));
+        listaProducto[0].stock = restar(listaProducto[0].stock, unidades);
+        total = multi(unidades, listaProducto[0].precio);
+        carrito = sumar(carrito, total);
+        alert(` Su compra es de $${total} \nespecificacion del producto :\n${listaProducto[0].nombre}\nmaterial:  ${listaProducto[0].tipo} \ncantidad: ${unidades} \ncarrito: $${carrito}`);
+
+        pago()
+        
+    } else if (ingreso == 2) {
+        unidades = parseInt(prompt(`¿Cuantas unidades de ${listaProducto[1].nombre} deseas?`));
+        listaProducto[1].stock = restar(listaProducto[1].stock, unidades);
+        total = multi(unidades, listaProducto[1].precio);
+        carrito = sumar(carrito, total);
+        alert(` Su compra es de $${total} \nespecificacion del producto :\n${listaProducto[1].nombre}\nmaterial: ${listaProducto[1].tipo} \ncantidad: ${unidades} \ncarrito: $${carrito}`);
+
+        pago()
+        
+    } else if (ingreso == 3) {
+        unidades = parseInt(prompt(`¿Cuantas unidades de ${listaProducto[2].nombre} deseas?`));
+        listaProducto[2].stock = restar(listaProducto[2].stock, unidades);
+        total = multi(unidades, listaProducto[2].precio);
+        carrito = sumar(carrito, total);
+        alert(` Su compra es de $${total} \nespecificacion del producto :\n${listaProducto[2].nombre}\nmaterial: ${listaProducto[2].tipo} \ncantidad: ${unidades} \ncarrito: $${carrito}`);
+
+        pago()
+    
+    } else if (ingreso == 4) {
+        unidades = parseInt(prompt(`¿Cuantas unidades de ${listaProducto[3].nombre} deseas?`));
+        listaProducto[3].stock = restar(listaProducto[3].stock, unidades);
+        total = multi(unidades, listaProducto[3].precio);
+        carrito = sumar(carrito, total);
+        alert(` Su compra es de $${total} \nespecificacion del producto :\n${listaProducto[3].nombre}\nmaterial: ${listaProducto[3].tipo} \ncantidad: ${unidades} \ncarrito: $${carrito}`);
+
+        pago()
+    }else {
+        alert ("Opción inválida")
+    }
+}
+
+menu()
 
